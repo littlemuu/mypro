@@ -1,0 +1,14 @@
+{% extends "Students/base.html" %}
+{% block titie %}LITTLEMU{% endblock %}
+
+{% block content %}
+<h1>LITTLEMU</h1>
+{% for stu in stus %}
+<h2>
+    <a href="{{stu.get_absolute_url}}">
+        {{stu.Stu_Number}}
+    </a>
+</h2>
+{% endfor %}
+{% include "pagination.html" with page=stus %}
+{% endblock %}

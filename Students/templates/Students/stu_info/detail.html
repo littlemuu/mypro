@@ -1,0 +1,8 @@
+{% extends "Students/base.html" %}
+
+{% block title %}{{ stu.Stu_Number }}{% endblock %}
+
+{% block content %}
+<h1>{{ stu.Stu_Number }}</h1>
+{{ stu.Class_Number|linebreaks }}
+{% endblock %}
