@@ -1,14 +1,40 @@
-{% extends "Students/base.html" %}
-{% block titie %}LITTLEMU{% endblock %}
+{% extends 'Students/base.html' %}
+{% load static %}
+
+{% block title %}Student List{% endblock %}
 
 {% block content %}
-<h1>LITTLEMU</h1>
-{% for stu in stus %}
-<h2>
-    <a href="{{stu.get_absolute_url}}">
-        {{stu.Stu_Number}}
-    </a>
-</h2>
-{% endfor %}
-{% include "pagination.html" with page=stus %}
+<link href="{% static "list.css" %}" rel="stylesheet">
+    <h2>Student List</h2>
+    <div class="table-container">
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>Class Number</th>
+                    <th>Student Number</th>
+                    <!-- 表头信息 -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for stu in stus %}
+                    <tr>
+                        <td>{{ stu.Class_Number }}</td>
+                        <td><a href="{{stu.get_absolute_url}}">{{ stu.Stu_Number }}</a></td> <!-- 学号作为链接 -->
+                        <!-- 学生信息 -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="pagination">
+        {% if stus.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ stus.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">Page {{ stus.number }} of {{ stus.paginator.num_pages }}.</span>
+        {% if stus.has_next %}
+            <a href="?page={{ stus.next_page_number }}">Next</a>
+            <a href="?page={{ stus.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
 {% endblock %}

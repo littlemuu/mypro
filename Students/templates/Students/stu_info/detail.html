@@ -1,8 +1,10 @@
-{% extends "Students/base.html" %}
+{% extends 'Students/base.html' %}
 
-{% block title %}{{ stu.Stu_Number }}{% endblock %}
+{% block title %}Student Detail{% endblock %}
 
 {% block content %}
-<h1>{{ stu.Stu_Number }}</h1>
-{{ stu.Class_Number|linebreaks }}
+    <h2>Student Detail</h2>
+    <p><strong>Class Number:</strong> {{ stu.Class_Number }}</p>
+    <p><strong>Student Number:</strong> {{ stu.Stu_Number }}</p>
+    <!-- 在这里添加其他学生信息字段 -->
 {% endblock %}

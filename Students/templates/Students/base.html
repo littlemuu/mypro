@@ -1,16 +1,28 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block titie %}{% endblock %}</title>
-    </head>
-    <body>
-        <div id="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-        <div id="sidebar">
-            <h2>LITTLEMU</h2>
-        </div>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My School Website{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>My School Website</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'Students:Stu_List' %}">Student List</a></li>
+                <!-- 在这里添加其他导航链接 -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- 这里放主要内容 -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My School</p>
+    </footer>
+</body>
 </html>
