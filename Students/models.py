@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.shortcuts import redirect, render
 
 # Create your models here.
 class Stu_Info(models.Model):
@@ -22,3 +23,6 @@ class Stu_Info(models.Model):
 
     def get_absolute_url(self):
         return reverse('Students:Stu_Detail', args=[self.Stu_Number, self.Class_Number])
+
+    
+    

@@ -1,10 +1,12 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, k_means
 from sklearn.decomposition import PCA
 from io import BytesIO
 import base64
+
+from sympy import centroid
 from .models import Stu_Info  # 导入学生信息模型
 
 def get_student_data(stu):
@@ -38,7 +40,8 @@ def generate_kmeans_plot(stu):
     # 查询当前学生的信息
     student_data = get_student_data(stu)
     # 合并数据集和当前学生的信息
-    s_d_p = data.append(student_data, ignore_index=True)
+    s_d_p = pd.concat([data, student_data], ignore_index=True)
+
     # 使用PCA进行线性降维
     pca = PCA(n_components=1)
     s_d_p = pca.fit_transform(s_d_p)
@@ -48,7 +51,7 @@ def generate_kmeans_plot(stu):
     # 查询当前学生的G3信息
     student_G3 = get_student_G3(stu)
     # 合并
-    s_G_p = G3_data.append(student_G3, ignore_index=True)
+    s_G_p = pd.concat([G3_data,student_G3], ignore_index=True)
 
     data_with_G3 = pd.concat([pd.DataFrame(s_d_p, columns=['PCA']), s_G_p], axis=1)
 
@@ -62,6 +65,27 @@ def generate_kmeans_plot(stu):
     # 获取聚类中心和每个样本所属的簇
     centroids = kmeans.cluster_centers_
     labels = kmeans.labels_
+
+    distance = pd.Series()
+    for i in range(len(data_with_G3)):
+        Xa = np.array(data_with_G3.iloc[i])
+        Xb = centroids[labels[i]]
+        distance.at[i] = np.linalg.norm(Xa-Xb)  # 使用at[]方法设置值
+
+    # 设置异常值比例
+    Proportion_outlier = 0.01
+
+    # 计算异常值的数量
+    number_of_outliers = int(Proportion_outlier*len(distance))
+
+    # 设定异常值的阈值
+    threshold = distance.nlargest(number_of_outliers).min()
+
+    # 判断是否为异常值
+    data_with_G3['outlier'] = (distance >= threshold).astype(int)
+
+    # 判断当前学生是否为异常
+    current_student_outlier = data_with_G3.iloc[-1]['outlier']
 
     # 可视化聚类结果
     colors = ['r', 'g', 'b', 'c', 'm']  # 设置不同簇的颜色
@@ -84,10 +108,10 @@ def generate_kmeans_plot(stu):
     # 将图像保存为字节流
     buffer = BytesIO()
     plt.savefig(buffer, format='png')
-    buffer.seek(0)
-    plt.close()
+    plt.close()  # 在编码之前关闭图形对象
 
     # 将字节流编码为base64字符串
+    buffer.seek(0)
     image_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
 
-    return f'data:image/png;base64,{image_base64}'
+    return f'data:image/png;base64,{image_base64}', current_student_outlier

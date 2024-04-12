@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades List</title>
+</head>
+<body>
+    <h1>Grades List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Test Time</th>
+                <th>Average Grade</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for grade in grades %}
+            <tr>
+                <td>{{ grade.test_time }}</td>
+                <td>{{ grade.avg_grade }}</td>
+                <!-- Display more attributes as needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

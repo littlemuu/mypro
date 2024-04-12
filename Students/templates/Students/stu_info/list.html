@@ -4,8 +4,67 @@
 {% block title %}Student List{% endblock %}
 
 {% block content %}
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>Medu-母亲的教育程度: 0 -无; 1 -小学教育; 2 -初中教育; 3 -高中教育; 4 –高等教育</li>
+                <li>Fedu-父亲的教育程度: 0 -无; 1 -小学教育; 2 -初中教育; 3 -高中教育; 4 –高等教育</li>
+                <li>Travel Time-上学通勤时间: 1 -&lt;15min; 2 -15至30min; 3 -30min至1h; 4 -&gt;1h</li>
+                <li>Study Time-每周学习时间: 1 -&lt;2h; 2 -2至5h; 3 -5至10h; 4 -&gt;10h</li>
+                <li>Failures-课堂失败次数: 0至3; 4次以上均为4</li>
+                <li>Famrel-家庭关系质量: 1 -非常差 至 5 -极好</li>
+                <li>Freetime-空闲时间: 1 -极少 至 5 -极多</li>
+                <li>Go out-外出时间: 1 -极少 至 5 -极多</li>
+                <li>Health-健康状况: 1 -非常差 至 5 -极好</li>
+                <li>Absences-缺勤次数</li>
+                <!-- 在这里添加其他导航链接 -->
+            </ul>
+        </nav>
+    </header>
+</body>
+
 <link href="{% static "list.css" %}" rel="stylesheet">
     <h2>Student List</h2>
+
+    <!-- 添加学生表单 -->
+    <form method="post" action="{% url 'Students:add_student' %}">
+        {% csrf_token %}
+        <div class="add-student-form">
+            <label for="Stu_Number">Student Number:</label>
+            <input type="text" name="Stu_Number" id="Stu_Number">
+            <label for="Class_Number">Class Number:</label>
+            <input type="text" name="Class_Number" id="Class_Number">
+            <label for="Medu">Mother's education level:</label>
+            <input type="text" name="Medu" id="Medu">
+            <label for="Fedu">Father's education level:</label>
+            <input type="text" name="Fedu" id="Fedu">
+            <label for="traveltime">Home to school travel time:</label>
+            <input type="text" name="traveltime" id="traveltime">
+            <label for="studytime">Weekly study time:</label>
+            <input type="text" name="studytime" id="studytime">
+            <label for="failures">Number of past class failures:</label>
+            <input type="text" name="failures" id="failures">
+            <label for="famrel">Quality of family relationships:</label>
+            <input type="text" name="famrel" id="famrel">
+            <label for="freetime">Free time after school:</label>
+            <input type="text" name="freetime" id="freetime">
+            <label for="goout">Going out with friends:</label>
+            <input type="text" name="goout" id="goout">
+            <label for="healths">Current health status:</label>
+            <input type="text" name="healths" id="healths">
+            <label for="absences">Number of school absences:</label>
+            <input type="text" name="absences" id="absences">
+            <label for="G1">First period grade:</label>
+            <input type="text" name="G1" id="G1">
+            <label for="G2">Second period grade:</label>
+            <input type="text" name="G2" id="G2">
+            <label for="G3">Final grade:</label>
+            <input type="text" name="G3" id="G3">
+            <button type="submit">Add Student</button>
+        </div>
+    </form>
+
     <div class="table-container">
         <table class="student-table">
             <thead>
@@ -25,7 +84,6 @@
                     <th>G1</th>
                     <th>G2</th>
                     <th>G3</th>
-                    <!-- 表头信息 -->
                 </tr>
             </thead>
             <tbody>
