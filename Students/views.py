@@ -6,7 +6,7 @@ from .km import generate_kmeans_plot
 # Create your views here.
 
 def Stu_List(request):
-    object_list = Stu_Info.objects.order_by('Class_Number', 'Stu_Number')
+    object_list = Stu_Info.objects.order_by('Class_Number_id', 'Stu_Number')
     paginator = Paginator(object_list, 10)
     page = request.GET.get('page')
     try:
@@ -18,7 +18,7 @@ def Stu_List(request):
     return render(request, 'Students/stu_info/list.html', {'page': page, 'stus': stus})
 
 def Stu_Detail(request, SN, CN):
-    stu = get_object_or_404(Stu_Info, Stu_Number=SN, Class_Number=CN)
+    stu = get_object_or_404(Stu_Info, Stu_Number=SN, Class_Number_id=CN)
     
     # 调用K均值聚类算法函数并获取生成的图片文件路径和异常值检测结果
     image_path, is_outlier = generate_kmeans_plot(stu.id)
@@ -32,7 +32,7 @@ def add_student(request):
     if request.method == 'POST':
         # 如果表单被提交，处理表单数据
         stu_number = request.POST.get('Stu_Number')
-        class_number = request.POST.get('Class_Number')
+        class_number = request.POST.get('Class_Number_id')
         medu = request.POST.get('Medu')
         fedu = request.POST.get('Fedu')
         traveltime = request.POST.get('traveltime')
@@ -50,7 +50,7 @@ def add_student(request):
         # 创建学生对象并保存到数据库
         Stu_Info.objects.create(
             Stu_Number=stu_number,
-            Class_Number=class_number,
+            Class_Number_id=class_number,
             Medu=medu,
             Fedu=fedu,
             traveltime=traveltime,

@@ -2,11 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.shortcuts import redirect, render
+from account.models import Classes
 
 # Create your models here.
 class Stu_Info(models.Model):
     Stu_Number = models.CharField(max_length=50)
-    Class_Number = models.CharField(max_length=50)
+    Class_Number = models.ForeignKey(Classes, on_delete=models.CASCADE)
     Medu = models.IntegerField()  # Mother's education level
     Fedu = models.IntegerField()  # Father's education level
     traveltime = models.IntegerField()  # Home to school travel time
