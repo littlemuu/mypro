@@ -2,9 +2,12 @@ from django.shortcuts import redirect, render,get_object_or_404
 from .models import Stu_Info
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .km import generate_kmeans_plot
+from account.views import index
 
 # Create your views here.
 
+from django.contrib.auth.decorators import login_required
+@login_required
 def Stu_List(request):
     object_list = Stu_Info.objects.order_by('Class_Number_id', 'Stu_Number')
     paginator = Paginator(object_list, 10)
@@ -15,8 +18,9 @@ def Stu_List(request):
         stus = paginator.page(1)
     except EmptyPage:
         stus = paginator.page(paginator.num_pages)
-    return render(request, 'Students/stu_info/list.html', {'page': page, 'stus': stus})
+    return render(request, 'Students/stu_info/list.html', {'page': page, 'stus': stus, 'section':'Stu_List'})
 
+@login_required
 def Stu_Detail(request, SN, CN):
     stu = get_object_or_404(Stu_Info, Stu_Number=SN, Class_Number_id=CN)
     
@@ -28,6 +32,7 @@ def Stu_Detail(request, SN, CN):
     
     return render(request, 'Students/stu_info/detail.html', context)
 
+@login_required
 def add_student(request):
     if request.method == 'POST':
         # 如果表单被提交，处理表单数据
