@@ -1,0 +1,21 @@
+/* 表格样式 */
+.grades-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.grades-table th,
+.grades-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.grades-table th {
+    background-color: #f2f2f2;
+}
+
+
+
+
+        

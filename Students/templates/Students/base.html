@@ -11,13 +11,13 @@
             {% if request.user.is_authenticated %}
             <ul class="menu">
                 <li {% if section == "index" %}class="selected"{% endif %}>
-                    <a href="{% url 'account:index' %}">个人信息页面</a>
+                    <a href="{% url 'account:index' %}">个人信息</a>
                 </li>
                 <li {% if section == "Stu_List" %}class="selected"{% endif %}>
-                    <a href="{% url 'Students:Stu_List' %}">KMeans页面</a>
+                    <a href="{% url 'Students:Stu_List' %}">KMeans</a>
                 </li>
-                <li {% if section == "people" %}class="selected"{% endif %}>
-                    <a href="{% url 'Predict:grades_list' %}">RNN页面</a>
+                <li {% if section == "grades_list" %}class="selected"{% endif %}>
+                    <a href="{% url 'Predict:grades_list' %}">RNN</a>
                 </li>
             </ul>
             {% endif %}

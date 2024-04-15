@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}RNN Prediction{% endblock %}
+
+{% block content %}
+
+<link href="{% static "list.css" %}" rel="stylesheet">
+<h1>Grades List</h1>
+<div class="table-container">
+    <table class="grades-table">
+        <thead>
+            <tr>
+                <th>Test Time</th>
+                <th>Average Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grade in grades %}
+            <tr>
+                <td>{{ grade.test_time }}</td>
+                <td>{{ grade.avg_grade }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h2>添加成绩</h2>
+<!-- 添加成绩表单 -->
+<form method="post" action="{% url 'Predict:add_grades' %}">
+    {% csrf_token %}
+    <div class="add-grades-form">
+        <label for="test_time">test_time:</label>
+        <input type="date" name="test_time" id="test_time" title="测试时间">
+
+        <label for="avg_grade">avg_grade:</label>
+        <input type="text" name="avg_grade" id="avg_grade" title="测试平均成绩">
+    </div>
+    <p><input type="submit" value="添加"></p>
+</form>
+{% endblock %}
