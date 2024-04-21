@@ -34,8 +34,14 @@ def get_student_G3(stu):
 
 def generate_kmeans_plot(stu):
     # 读取CSV文件并选择指定的列
-    data = pd.read_csv(r'D:\college3\111\data\student-mat.csv', sep=';', usecols=['Medu', 'Fedu', 'traveltime', 'studytime', 'failures', 'famrel', 'freetime', 'goout', 'health', 'absences'])
-    G3_data = pd.read_csv(r'D:\college3\111\data\student-mat.csv', sep=';', usecols=['G3'])
+    data1 = pd.read_csv(r'D:\college3\111\data\student-mat.csv', sep=';', usecols=['Medu', 'Fedu', 'traveltime', 'studytime', 'failures', 'famrel', 'freetime', 'goout', 'health', 'absences'])
+    data2 = pd.read_csv(r'D:\college3\111\data\student-por.csv', sep=';', usecols=['Medu', 'Fedu', 'traveltime', 'studytime', 'failures', 'famrel', 'freetime', 'goout', 'health', 'absences'])   
+    data = pd.concat([data1,data2])
+    #处理缺失值
+    #data = data3.dropna()
+    G3_data1 = pd.read_csv(r'D:\college3\111\data\student-mat.csv', sep=';', usecols=['G3'])
+    G3_data2 = pd.read_csv(r'D:\college3\111\data\student-por.csv', sep=';', usecols=['G3'])
+    G3_data = pd.concat([G3_data1,G3_data2])
 
     # 查询当前学生的信息
     student_data = get_student_data(stu)

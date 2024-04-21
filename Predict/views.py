@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Prediction
 from django.contrib.auth.decorators import login_required
+from .rnn import draw1,draw2
 
 # Create your views here.
 
@@ -26,3 +27,13 @@ def add_grades(request):
     else:
         # 如果是GET请求，返回空的表单
         return render(request, 'Predict/adding.html')
+
+@login_required
+def pre_result(request):
+    image_path1 = draw1()
+    image_path2 = draw2()
+    
+    # 将图片路径添加到上下文数据中
+    context = {'image_path1': image_path1, 'image_path2': image_path2}
+    
+    return render(request, 'Pre/result.html', context)
