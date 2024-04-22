@@ -14,6 +14,11 @@
     {% else %}
         <p>该学生不存在异常</p>
     {% endif %}
-
-    <!-- 在这里添加其他学生信息字段 -->
+    
+    <!-- 删除按钮 -->
+    <form action="{% url 'Students:delete_student' stu.Stu_Number stu.Class_Number_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="删除该学生">
+    </form>
+    
 {% endblock %}

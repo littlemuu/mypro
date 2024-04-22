@@ -10,6 +10,14 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def Stu_List(request):
     object_list = Stu_Info.objects.order_by('Class_Number_id', 'Stu_Number')
+
+    # 获取搜索框中的学生学号
+    search_query = request.GET.get('search', '')
+
+    # 如果搜索框中有内容，则进行过滤
+    if search_query:
+        object_list = object_list.filter(Stu_Number__icontains=search_query)
+
     paginator = Paginator(object_list, 10)
     page = request.GET.get('page')
     try:
@@ -76,3 +84,9 @@ def add_student(request):
     else:
         # 如果是GET请求，返回空的表单
         return render(request, 'Students/list.html')
+
+@login_required
+def delete_student(request, SN, CN):
+    stu = get_object_or_404(Stu_Info, Stu_Number=SN, Class_Number_id=CN)
+    stu.delete()
+    return redirect('Students:Stu_List')

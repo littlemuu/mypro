@@ -344,3 +344,10 @@ img.user-detail {
 .grades-table th {
     background-color: #f2f2f2;
 }
+
+.transparent-button {
+    background-color: transparent;
+    border: none;
+    color: inherit; 
+    cursor: pointer;
+}

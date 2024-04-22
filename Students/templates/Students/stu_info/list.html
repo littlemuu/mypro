@@ -8,6 +8,21 @@
 <link href="{% static "list.css" %}" rel="stylesheet">
 <h1>学生列表</h1>
 
+<div class="search-container">
+    <form id="search-form" method="GET" action="">
+        <input type="text" id="search-input" name="search" placeholder="输入学生学号...">
+        <button type="submit">查询</button>
+        <button type="button" onclick="clearSearch()">清除</button>
+    </form>
+</div>
+
+<script>
+    function clearSearch() {
+        document.getElementById("search-input").value = "";
+        document.getElementById("search-form").submit();
+    }
+</script>
+
 <div class="table-container">
     <table class="student-table">
         <thead>
