@@ -10,11 +10,11 @@
     <img src="{{image_path}}" alt="K-means Clustering Image">
     </div>
     {% if is_outlier %}
-        <p>该学生异常</p>
+    <p style="color: red; font-weight: bold;">该学生异常</p>
     {% else %}
-        <p>该学生不存在异常</p>
+    <p style="color: green; font-weight: bold;">该学生不存在异常</p>
     {% endif %}
-    
+
     <!-- 删除按钮 -->
     <form action="{% url 'Students:delete_student' stu.Stu_Number stu.Class_Number_id %}" method="post">
         {% csrf_token %}

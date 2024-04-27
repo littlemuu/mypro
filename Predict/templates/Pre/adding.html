@@ -16,14 +16,14 @@
             <table class="grades-table">
                 <thead>
                     <tr>
-                        <th>Test Time</th>
-                        <th>Average Grade</th>
+                        <th>考试时间</th>
+                        <th>平均成绩</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for grade in grades %}
                     <tr>
-                        <td>{{ grade.test_time }}</td>
+                        <td>{{ grade.test_time|date:"Y年m月" }}</td>
                         <td>{{ grade.avg_grade }}</td>
                     </tr>
                     {% endfor %}

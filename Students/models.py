@@ -18,8 +18,9 @@ class Stu_Info(models.Model):
     goout = models.IntegerField()  # Going out with friends
     healths = models.IntegerField()  # Current health status
     absences = models.IntegerField()  # Number of school absences
-    G1 = models.IntegerField()  # First period grade
-    G2 = models.IntegerField()  # Second period grade
+    G1 = models.IntegerField(null=True, default=None)
+  # First period grade
+    G2 = models.IntegerField(null=True, default=None)  # Second period grade
     G3 = models.IntegerField()  # Final grade
 
     def get_absolute_url(self):

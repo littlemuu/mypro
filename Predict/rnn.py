@@ -131,16 +131,23 @@ for i in range(future):
 true_predictions = scaler.inverse_transform(np.array(preds[window_size:]).reshape(-1, 1))
 #print(true_predictions)
 
+# 获取数据中的最小和最大日期
+min_date = df['test_time'].min()
+max_date = df['test_time'].max()
+
+max_date_minus_11_months = max_date - pd.DateOffset(months=11)
+
 def draw1():
-    X=np.arange('2014-12-31','2020-12-31',dtype='datetime64[M]')
-    x = np.arange('2019-12-01', '2020-12-31', dtype='datetime64[M]').astype('datetime64[D]')
+    X=np.arange(min_date-pd.DateOffset(days=1),max_date+pd.DateOffset(days=10),dtype='datetime64[M]')
+    x=np.arange(max_date_minus_11_months-pd.DateOffset(days=1), max_date+pd.DateOffset(days=10), dtype='datetime64[M]').astype('datetime64[D]')
     plt.figure(figsize=(12,4))
-    plt.title('Grades')
-    plt.ylabel('avg_grade')
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    plt.title('成绩预测')
+    plt.ylabel('平均成绩')
     plt.grid(True)
     #plt.autoscale(axis='x', tight=True)
-    plt.plot(X,df['avg_grade'], color='#8000ff')
-    plt.plot(x,true_predictions, color='#ff8000')
+    plt.plot(X,df['avg_grade'], color='b')
+    plt.plot(x,true_predictions, color='r')
     #plt.show()
      # 将图像保存为字节流
     buffer = BytesIO()
@@ -152,16 +159,17 @@ def draw1():
     return f'data:image/png;base64,{image_base64}'
 
 def draw2():
-    x = np.arange('2019-12-01', '2020-12-31', dtype='datetime64[M]').astype('datetime64[D]')
+    x=np.arange(max_date_minus_11_months-pd.DateOffset(days=1), max_date+pd.DateOffset(days=10), dtype='datetime64[M]').astype('datetime64[D]')
     fig = plt.figure(figsize=(12,4))
-    plt.title('Grades')
-    plt.ylabel('avg_grade')
+    plt.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    plt.title('成绩预测详细值')
+    plt.ylabel('平均成绩')
     plt.grid(True)
     plt.autoscale(axis='x',tight=True)
     fig.autofmt_xdate()
     df.index = pd.to_datetime(df.index)  # 将索引转换为日期时间类型
-    plt.plot(df['avg_grade']['2020-01-01':], color='#8000ff')  # 使用日期时间索引进行切片操作
-    plt.plot(x,true_predictions, color='#ff8000')
+    plt.plot(df['avg_grade'][max_date_minus_11_months:], color='b')  # 使用日期时间索引进行切片操作
+    plt.plot(x,true_predictions, color='r')
     #plt.show()
      # 将图像保存为字节流
     buffer = BytesIO()
